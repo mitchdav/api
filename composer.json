@@ -1,0 +1,36 @@
+{
+  "name": "mitchdav/api",
+  "description": "A Laravel package for API management within microservices.",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Mitchell Davis",
+      "email": "mitch@wingmanwebdesign.com.au"
+    }
+  ],
+  "keywords": [
+    "api",
+    "apis",
+    "dingo",
+    "laravel",
+    "microservice",
+    "microservices",
+    "route",
+    "routes",
+    "routing",
+    "service provider"
+  ],
+  "autoload": {
+    "psr-4": {
+      "Mitchdav\\API\\": "src/"
+    }
+  },
+  "require": {
+    "dingo/api": "2.0.0-alpha1",
+    "illuminate/database": "^5.5",
+    "illuminate/support": "^5.5",
+    "hipsterjazzbo/landlord": "^2.0",
+    "ramsey/uuid": "^3.7"
+  }
+}
