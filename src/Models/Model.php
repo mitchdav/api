@@ -4,11 +4,39 @@ namespace Mitchdav\API\Models;
 
 use HipsterJazzbo\Landlord\BelongsToTenants;
 use Illuminate\Database\Eloquent\Model as BaseModel;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Mitchdav\API\Observers\SoftDeleteObserver;
 use Mitchdav\API\Scopes\CreatedAtScope;
+use Ramsey\Uuid\Uuid;
 
 class Model extends BaseModel
 {
-	use BelongsToTenants;
+	use BelongsToTenants, SoftDeletes;
+
+	public    $incrementing = FALSE;
+
+	protected $dates        = [
+		'deleted_at',
+	];
+
+	protected $hidden       = [
+		'deleted_at',
+		'deletion_token',
+	];
+
+	protected $guarded      = [
+		'created_at',
+		'updated_at',
+		'deleted_at',
+	];
+
+	public function __construct(array $attributes = [])
+	{
+		parent::__construct($attributes);
+
+		$this->attributes['id'] = Uuid::uuid4()
+		                              ->toString();
+	}
 
 	/**
 	 * The "booting" method of the model.
@@ -19,7 +47,8 @@ class Model extends BaseModel
 	{
 		parent::boot();
 
-		static::addGlobalScope(new CreatedAtScope());
+		self::addGlobalScope(new CreatedAtScope());
+		self::observe(SoftDeleteObserver::class);
 	}
 
 	/**
