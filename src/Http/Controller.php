@@ -1,6 +1,6 @@
 <?php
 
-namespace Mitchdav\API\Http\Controllers;
+namespace Mitchdav\API\Http;
 
 use Dingo\Api\Routing\Helpers;
 use Illuminate\Contracts\Pagination\Paginator;
