@@ -30,5 +30,7 @@ class Provider extends ServiceProvider
 	public function register()
 	{
 		$this->mergeConfigFrom(__DIR__ . '/../config/microservices/api.php', 'microservices.api');
+
+		$this->app['router']->aliasMiddleware('tenant', \Mitchdav\API\Middleware\Tenant::class);
 	}
 }
