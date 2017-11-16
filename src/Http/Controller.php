@@ -13,7 +13,9 @@ use Mitchdav\API\Transformers\Transformer;
 
 class Controller extends BaseController
 {
-	use Helpers;
+	use Helpers {
+		user as protected helperUser;
+	}
 
 	/**
 	 * @var array $withRelationships
@@ -129,5 +131,13 @@ class Controller extends BaseController
 		if ($validator->fails()) {
 			throw new \Dingo\Api\Exception\ValidationHttpException($validator->failed());
 		}
+	}
+
+	/**
+	 * @return \Mitchdav\Authentication\User
+	 */
+	protected function user()
+	{
+		return $this->helperUser();
 	}
 }
