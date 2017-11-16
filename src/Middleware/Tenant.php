@@ -30,14 +30,15 @@ class Tenant
 			}
 		}
 
-		$route = $request->route();
+		$mapping = config('microservices.api.tenants.routeParameters', []);
 
-		$parameters = $route[2];
+		foreach ($mapping as $parameterName => $tenantColumn) {
+			$parameterValue = $request->route()
+			                          ->parameter($parameterName);
 
-		if (array_key_exists('organisationId', $parameters)) {
-			$organisationId = $parameters['organisationId'];
-
-			Landlord::addTenant('organisation_id', $organisationId);
+			if ($parameterValue) {
+				Landlord::addTenant($tenantColumn, $parameterValue);
+			}
 		}
 
 		return $next($request);
